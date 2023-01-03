@@ -60,6 +60,7 @@ class GameSate: ObservableObject {
         if (checkForDraw()) {
             alertMessage = "Draw"
             showAlert = true
+            turn = turn == Tile.Cross ? Tile.Nought : Tile.Cross
         }
             
     }
