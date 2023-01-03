@@ -1,10 +1,7 @@
-//
 //  GameState.swift
 //  TicTacToe-SwiftUI
 //
 //  Created by M. Ahmad Ali on 03/01/2023.
-//
-
 import Foundation
 
 class GameSate: ObservableObject {
@@ -14,7 +11,6 @@ class GameSate: ObservableObject {
     @Published var crossScore = 0
     @Published var showAlert = false
     @Published var alertMessage = "Draw"
-    
     
     init() {
         resetBoard()
@@ -32,13 +28,10 @@ class GameSate: ObservableObject {
         }
         board = newBoard
     }
+    
     func placeTile(for row: Int, for column: Int ) {
-        if (board[row][column].tile  != Tile.Empty) {
-            return
-        }
+        if (board[row][column].tile  != Tile.Empty) { return }
         board[row][column].tile = turn == Tile.Cross ? Tile.Cross : Tile.Nought
-        
-        
         if (checkForVictory()) {
             var winner = ""
             if (turn == Tile.Cross) {
@@ -50,28 +43,23 @@ class GameSate: ObservableObject {
                 turn = Tile.Cross
                 winner = "Noughts"
             }
-           
             alertMessage = "\(winner) win!"
             showAlert = true
         } else {
             turn = turn == Tile.Cross ? Tile.Nought : Tile.Cross
         }
-        
-        if (checkForDraw()) {
+        if (checkForDraw() == true) {
             alertMessage = "Draw"
             showAlert = true
-            turn = turn == Tile.Cross ? Tile.Nought : Tile.Cross
         }
-            
+        
     }
     
     func checkForDraw() -> Bool {
         
         for row in board {
             for cell in row {
-                if cell.tile == Tile.Empty {
-                    return false
-                }
+                if (cell.tile == Tile.Empty) { return false }
             }
         }
         return true
@@ -103,8 +91,6 @@ class GameSate: ObservableObject {
         if isTurnTile(0, 2) && isTurnTile(1, 1) && isTurnTile(2, 0) {
             return true
         }
-
-        
         return false
     }
     
